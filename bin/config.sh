@@ -27,3 +27,7 @@ cf-mgmt add-org-to-config --org lydia --org-billing-mgr-grp gentry --org-auditor
 cf-mgmt add-space-to-config --org lydia --space production --space-mgr-grp captains --space-auditor-grp "HMS Lydia"
 cf-mgmt add-space-to-config --org lydia --space integration --space-mgr-grp lieutenants --space-auditor-grp "HMS Lydia"
 cf-mgmt add-space-to-config --org lydia --space development --space-mgr-grp crew --space-dev-grp "HMS Lydia"
+
+git add config
+git commit -m "Added various orgs and spaces"
+git push --set-upstream origin demo
