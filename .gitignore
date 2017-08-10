@@ -1,0 +1,7 @@
+config
+config/*
+ci
+ci/*
+pipeline.yml
+vars.yml
+*.bak
