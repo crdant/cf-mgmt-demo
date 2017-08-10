@@ -5,3 +5,4 @@ ci/*
 pipeline.yml
 vars.yml
 *.bak
+data/*.log
