@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-BASEDIR=`dirname $0`
+BASEDIR=`dirname $0`/..
 cf-mgmt init-config
 
 # allow for organizations for the entire navy and each ship with spaces for development regions
@@ -27,6 +27,16 @@ cf-mgmt add-org-to-config --org lydia --org-billing-mgr-grp gentry --org-auditor
 cf-mgmt add-space-to-config --org lydia --space production --space-mgr-grp captains --space-auditor-grp "HMS Lydia"
 cf-mgmt add-space-to-config --org lydia --space integration --space-mgr-grp lieutenants --space-auditor-grp "HMS Lydia"
 cf-mgmt add-space-to-config --org lydia --space development --space-mgr-grp crew --space-dev-grp "HMS Lydia"
+
+# modify ldap configuration
+sed -i '' 's#ldapHost: ""#ldapHost: localhost#"' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#ldapPort: 0#ldapPort: 389#' ${BASEDIR}/config/ldap.ymll
+sed =i '' 's#bindDN: ""#bindDN: "cn=admin,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed =i '' 's#userSearchBase: """#userSearchBase: "ou=people,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed =i '' 's#userNameAttribute: ""#userNameAttribute: "uid"#' ${BASEDIR}/config/ldap.yml
+sed =i '' 's#userObjectClass: ""#userObjectClass: "inetOrgPerson"#' ${BASEDIR}/config/ldap.yml
+sed =i '' 's#groupSearchBase: ""#groupSearchBase: "ou=groups,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed =i '' 's#groupdAttribute: ""#groupAttribute: "uniqueMember"#' ${BASEDIR}/config/ldap.yml
 
 git add config
 git commit -m "Added various orgs and spaces"
