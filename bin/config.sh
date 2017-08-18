@@ -37,7 +37,7 @@ sed -i '' 's#userNameAttribute: ""#userNameAttribute: "uid"#' ${BASEDIR}/config/
 sed -i '' 's#userMailAttribute: ""#userMailAttribute: "mail"#' ${BASEDIR}/config/ldap.yml
 sed -i '' 's#userObjectClass: ""#userObjectClass: "inetOrgPerson"#' ${BASEDIR}/config/ldap.yml
 sed -i '' 's#groupSearchBase: ""#groupSearchBase: "ou=groups,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
-sed -i '' 's#groupdAttribute: ""#groupAttribute: "uniqueMember"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#groupAttribute: ""#groupAttribute: "uniqueMember"#' ${BASEDIR}/config/ldap.yml
 
 git add config
 git commit -m "Added various orgs and spaces"
