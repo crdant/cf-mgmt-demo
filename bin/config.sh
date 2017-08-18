@@ -30,7 +30,7 @@ cf-mgmt add-space-to-config --org lydia --space development --space-mgr-grp crew
 
 # modify ldap configuration
 sed -i '' 's#enabled: false#enabled: true#' ${BASEDIR}/config/ldap.yml
-sed -i '' 's#ldapHost: ""#ldapHost: "localhost"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#ldapHost: ""#ldapHost: "192.168.100.1"#' ${BASEDIR}/config/ldap.yml
 sed -i '' 's#ldapPort: 0#ldapPort: 389#' ${BASEDIR}/config/ldap.yml
 sed -i '' 's#bindDN: ""#bindDN: "cn=admin,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
 sed -i '' 's#userSearchBase: ""#userSearchBase: "ou=people,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
