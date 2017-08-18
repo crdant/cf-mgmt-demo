@@ -29,14 +29,15 @@ cf-mgmt add-space-to-config --org lydia --space integration --space-mgr-grp lieu
 cf-mgmt add-space-to-config --org lydia --space development --space-mgr-grp crew --space-dev-grp "HMS Lydia"
 
 # modify ldap configuration
-sed -i '' 's#ldapHost: ""#ldapHost: localhost#"' ${BASEDIR}/config/ldap.yml
-sed -i '' 's#ldapPort: 0#ldapPort: 389#' ${BASEDIR}/config/ldap.ymll
-sed =i '' 's#bindDN: ""#bindDN: "cn=admin,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
-sed =i '' 's#userSearchBase: """#userSearchBase: "ou=people,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
-sed =i '' 's#userNameAttribute: ""#userNameAttribute: "uid"#' ${BASEDIR}/config/ldap.yml
-sed =i '' 's#userObjectClass: ""#userObjectClass: "inetOrgPerson"#' ${BASEDIR}/config/ldap.yml
-sed =i '' 's#groupSearchBase: ""#groupSearchBase: "ou=groups,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
-sed =i '' 's#groupdAttribute: ""#groupAttribute: "uniqueMember"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#ldapHost: ""#ldapHost: "localhost"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#ldapPort: 0#ldapPort: 389#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#bindDN: ""#bindDN: "cn=admin,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#userSearchBase: ""#userSearchBase: "ou=people,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#userNameAttribute: ""#userNameAttribute: "uid"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#userMailAttribute: ""#userMailAttribute: "mail"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#userObjectClass: ""#userObjectClass: "inetOrgPerson"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#groupSearchBase: ""#groupSearchBase: "ou=groups,o=sevenSeas,dc=pivotal,dc=org"#' ${BASEDIR}/config/ldap.yml
+sed -i '' 's#groupdAttribute: ""#groupAttribute: "uniqueMember"#' ${BASEDIR}/config/ldap.yml
 
 git add config
 git commit -m "Added various orgs and spaces"
