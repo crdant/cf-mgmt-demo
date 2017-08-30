@@ -1,21 +1,15 @@
 #!/usr/bin/env bash
 BASEDIR=`dirname $0`
 . "${BASEDIR}/lib/env.sh"
-. ${workdir}/bbl-env.sh
 
-env_id=`bbl env-id`
 stemcell_version=3431.13
 stemcell_checksum=8ae6d01f01f627e70e50f18177927652a99a4585
 
 ldap_version=0.3.0
 ldap_checksum=36fd3294f756372ff9fbbd6dfac11fe6030d02f9
 ldap_static_ip=10.0.31.
+# ldap_static_ip=10.244.0.2
 ldap_port=636
-
-export ldap_config_dn='cn=config'
-export ldap_admin_user=admin
-export ldap_cert_file=${key_dir}/ldap-${env_id}.crt
-export ldap_key_file=${key_dir}/ldap-${env_id}.key
 
 ssl_certificates () {
   echo "Creating SSL certificate..."
@@ -46,27 +40,18 @@ safe_auth () {
   jq --raw-output '.auth.client_token' ${key_dir}/bootstrap-${env_id}-token.json | safe auth token
 }
 
-prepare_manifest () {
-  local manifest=${workdir}/concourse.yml
-  export atc_vault_token=`jq --raw-output '.auth.client_token' ${key_dir}/atc-${env_id}-token.json`
-  export vault_cert_file=${key_dir}/vault-${env_id}.crt
-
-  spruce merge --prune tls ${manifest_dir}/concourse.yml > $manifest
-}
-
-
-prepare_manifest () {
-  local manifest=${workdir}/ldap.yml
+deploy () {
+  local manifest=${manifest_dir}/ldap.yml
   safe_auth
   safe set secret/bootstrap/ldap/admin value=`generate_passphrase 4`
-  export ldap_password=`safe get secret/bootstrap/concourse/admin:value`
 
-  ldap_static_ip=${ldap_static_ip} spruce merge ${manifest_dir}/ldap.yml > ${manifest}
-}
+  ldap_olc_suffix='cn=config'
+  ldap_olc_root_dn="cn=admin,dc=crdant,dc="
+  ldap_olc_root_password=`safe get secret/bootstrap/concourse/admin:value`
 
-deploy () {
-  local manifest=${workdir}/ldap.yml
-  bosh -n -e ${env_id} -d ldap deploy ${manifest}
+  bosh -n -e ${env_id} -d ldap deploy ${manifest} \
+    --var olc-suffix="${ldap_olc_suffix}" --var olc-root-dn="${ldap_olc_root_dn}" --var olc-root-password="$ldap_olc_root_password" \
+    --var-file ldap-cert="${key_dir}/ldap-${env_id}.crt" --var-file ldap-key="${key_dir}/ldap-${env_id}.key"
 }
 
 firewall() {
@@ -97,9 +82,6 @@ if [ $# -gt 0 ]; then
       release )
         release
         ;;
-      manifest )
-          prepare_manifest
-        ;;
       deploy )
         deploy
         ;;
@@ -125,7 +107,6 @@ fi
 ssl_certificates
 stemcell
 releases
-prepare_manifest
 deploy
 firewall
 tunnel

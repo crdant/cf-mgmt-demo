@@ -1,0 +1,39 @@
+---
+name: openldap
+
+releases:
+- name: openldap
+  version: latest
+
+instance_groups:
+- name: ldap
+  instances: 1
+  vm_type: n1-standard-1
+  stemcell: trusty
+  azs: [z1]
+  networks: [{name: private}]
+  jobs:
+  - name: ldap-server
+    release: openldap
+    properties:
+      ldap:
+        ssl:
+          active: true
+          server_cert: (( ldap-cert ))
+          server_key: (( ldap-key ))
+          ca_cert: (( ldap-cert ))
+        olcSuffix: (( olc-suffix ))
+        olcRootDN: (( olc-root-dn ))
+        olcRootPW: (( olc-root-password ))
+
+update:
+  canaries: 1
+  max_in_flight: 1
+  serial: false
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+
+stemcells:
+- alias: trusty
+  os: ubuntu-trusty
+  version: 3421.9
