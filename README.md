@@ -20,7 +20,7 @@ can do that pretty readily yourself, I just want to make it easier for you.
 
 ## Running the demo
 
-0. Check out your fork of this repository and change into that directory.
+1. Check out your fork of this repository and change into that directory.
 1. Make sure that PCF, your LDAP Server, and Concourse are running. In my setup I do this with
 ```bash
 $ cf dev start
@@ -67,4 +67,4 @@ $ cf spaces
 ...
 ```
 10. Edit `orgs.yml` and commit/push your changes. Watch the pipeline execute and re-inspect your orgs and spaces.
-11. When you're done with the demo, you can clean up after yourself with the `cleanup command`.
+11. When you're done with the demo, you can clean up after yourself with the `cleanup`. It will put your fork back to it's original state without the `demo` branch.
