@@ -23,5 +23,6 @@ git commit -m "Added pipeline tasks"
 git push --set-upstream origin demo
 
 # send the pipeline to concourse
+fly -t ${CONCOURSE_TARGET} login -c ${CONCOURSE_URL} -t ${CONCOURSE_TEAM}
 fly -t ${CONCOURSE_TARGET} set-pipeline -p cf-mgmt -c pipeline.yml --load-vars-from=vars.yml
-fly -t ${CONCOURSE_TARGET} unpause-pipeline -p cf-mgmt -c pipeline.yml 
+fly -t ${CONCOURSE_TARGET} unpause-pipeline -p cf-mgmt -c pipeline.yml
