@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+BASEDIR=`dirname $0`/..
+
+ldapadd -H $LDAP_URL -D cn=admin,dc=pivotal,dc=org -w $LDAP_PASSWORD -f data/apache-ds-tutorial.ldif
