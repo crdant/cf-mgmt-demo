@@ -20,7 +20,8 @@ sed -i '' "s#<password to bind to ldap>#${LDAP_PASSWORD}#" vars.yml
 
 git add ci
 git commit -m "Added pipeline tasks"
-git push --set-upstream origin demo 
+git push --set-upstream origin demo
 
 # send the pipeline to concourse
 fly -t ${CONCOURSE_TARGET} set-pipeline -p cf-mgmt -c pipeline.yml --load-vars-from=vars.yml
+fly -t ${CONCOURSE_TARGET} unpause-pipeline -p cf-mgmt -c pipeline.yml 
